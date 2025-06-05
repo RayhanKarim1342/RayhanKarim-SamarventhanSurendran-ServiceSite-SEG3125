@@ -137,7 +137,7 @@ body {
     }
 
     .date.active:not(.selected) {
-      background: #222;
+      background: #8d8383;
       color: #fff;
       border-radius: 50%;
     }
