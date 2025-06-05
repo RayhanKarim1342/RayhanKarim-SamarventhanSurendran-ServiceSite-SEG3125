@@ -20,7 +20,7 @@ const NotFound = () => {
         </h1>
         <Button
           as={Link}
-          to="/book"
+          to="/"
           variant="light"
           className="ms-2 rounded-pill p-2 fw-bold fs-6 shadow-lg mt-3"
         >
