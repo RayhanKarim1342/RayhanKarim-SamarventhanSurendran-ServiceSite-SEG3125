@@ -47,8 +47,129 @@
       a {
         text-decoration: none;
       }
+
+      body {
+        padding-top: 120px;
+        min-height: 100vh;
+        background: #fff;
+      }
+
+      .container .calendar {
+        width: 100%;
+        max-width: 400px;
+        margin: auto;
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+      }
+
+      .monthYear {
+        text-align: center;
+        font-weight: 600;
+        width: 150px;
+      }
+
+      .header button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        border-radius: 50%;
+        background: #fff;
+        cursor: pointer;
+        width: 40px;
+        height: 40px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      }
+
+      .days {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+      }
+
+      .day {
+        text-align: center;
+        padding: 5px;
+        color: #999fa6;
+        font-weight: 500;
+      }
+
+      .dates {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 5px;
+      }
+
+      .date {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 10px;
+        margin: auto;
+        cursor: pointer;
+        font-weight: 600;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        transition: 0.2s;
+      }
+
+      .date:hover,
+      .date.active {
+        background: #000;
+        color: #fff;
+      }
+
+      .date.inactive {
+        color: #d2d2d2;
+      }
+
+      .date.inactive:hover {
+        color: #fff;
+      }
     </style>
   </head>
+
+  <div
+    class="modal fade"
+    id="confirmationModal"
+    tabindex="-1"
+    aria-labelledby="confirmationModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmationModalLabel">
+            Appointment Booked
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          You have successfully booked your appointment.
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
   <body data-bs-spy="scroll" data-bs-target=".navbar" data-bs-offset="25">
     <header>
       <nav
@@ -58,7 +179,12 @@
         <h4 class="text-center text-light fw-bold">TechCare Repair Services</h4>
         <ul class="nav nav-pills">
           <li class="nav-item">
-            <a class="btn btn-light py-2 px-2 ms-2" href="index.html" style="font-size: 0.85rem;">Cancel</a>
+            <a
+              class="btn btn-light py-2 px-2 ms-2"
+              href="index.html"
+              style="font-size: 0.85rem"
+              >Cancel</a
+            >
           </li>
         </ul>
       </nav>
@@ -72,8 +198,62 @@
           book an appointment
         </h1>
         <div class="d-flex justify-content-center">
-          <div class="text-start ms-3 mt-4 me-5 pe-4 fs-4">
-            <p>not finished</p>
+          <div class="col-md-5">
+            <div class="calendar">
+              <div class="header mb-3">
+                <button id="prevBtn">←</button>
+                <div class="monthYear" id="monthYear"></div>
+                <button id="nextBtn">→</button>
+              </div>
+              <div class="days">
+                <div class="day">Mon</div>
+                <div class="day">Tue</div>
+                <div class="day">Wed</div>
+                <div class="day">Thu</div>
+                <div class="day">Fri</div>
+                <div class="day">Sat</div>
+                <div class="day">Sun</div>
+              </div>
+              <div class="dates" id="dates"></div>
+              <div class="mt-4">
+                <label for="timeInput" class="form-label"
+                  >What time works for you?</label
+                >
+                <input type="time" id="timeInput" class="form-control" />
+              </div>
+              <div class="text-center mt-3">
+                <button id="bookAppointmentBtn" class="btn btn-dark" disabled>
+                  Book Appointment
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <h5 class="fw-bold mt-2">Tell me about yourself</h5>
+            <form>
+              <div class="mb-3">
+                <label for="nameInput" class="form-label">Name</label>
+                <input type="text" class="form-control" id="nameInput" />
+              </div>
+              <div class="mb-3">
+                <label for="phoneInput" class="form-label">Phone Number</label>
+                <input type="tel" class="form-control" id="phoneInput" />
+              </div>
+              <div class="mb-3">
+                <label for="emailInput" class="form-label">Email</label>
+                <input type="email" class="form-control" id="emailInput" />
+              </div>
+              <div class="mb-3">
+                <label for="descriptionInput" class="form-label"
+                  >Detailed Description of the Issue</label
+                >
+                <textarea
+                  class="form-control"
+                  id="descriptionInput"
+                  rows="4"
+                ></textarea>
+              </div>
+            </form>
           </div>
         </div>
       </div>
