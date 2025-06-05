@@ -1,30 +1,28 @@
-import React from "react";
-import { Navbar, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Navbar, Button, Container } from "react-bootstrap";
+import { Link} from "react-router-dom";
+
 
 const NavigationBar = () => {
+
   return (
-    <Navbar bg="dark" variant="dark" expand="sm" className="fixed-top">
-      <div className="ms-4 me-4">
+    <Navbar bg="dark" variant="dark" expand="sm" fixed="top" className="px-3">
+      <Container fluid>
         <Navbar.Brand as={Link} to="/" className="mb-0 text-light fw-bold fs-4">
           TechCare Repair Services
         </Navbar.Brand>
-      </div>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav">
-        <div className="ms-auto me-3">
+        <div className="d-flex align-items-center ms-auto">
           <Button
             variant="light"
             as={Link}
             to="/"
-            className="rounded-pill p-2 fw-bold"
+            className="ms-2 rounded-pill p-2 fw-bold"
             style={{ fontSize: "0.85rem" }}
           >
-            <i class="bi bi-x-circle-fill"></i>
+            <i class="bi bi-gear-fill"></i>
             &nbsp; Cancel
           </Button>
         </div>
-      </Navbar.Collapse>
+      </Container>
     </Navbar>
   );
 };
