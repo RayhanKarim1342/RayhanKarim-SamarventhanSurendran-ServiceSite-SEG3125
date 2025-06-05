@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Form, Button, Modal } from 'react-bootstrap';
+import React, { useState, useEffect, forwardRef, useImperativeHandle } from 'react';
+import { Form, Modal } from 'react-bootstrap';
 
-const AppointmentForm = () => {
+const AppointmentForm = forwardRef(({ selectedDate, onFormValid }, ref) => {
   const [time, setTime] = useState('');
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
@@ -9,9 +9,25 @@ const AppointmentForm = () => {
   const [description, setDescription] = useState('');
   const [showModal, setShowModal] = useState(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setShowModal(true);
+  useEffect(() => {
+    const valid =
+      !!selectedDate &&
+      time.trim() !== '' &&
+      name.trim() !== '' &&
+      phone.trim() !== '' &&
+      email.trim() !== '' &&
+      description.trim() !== '';
+    onFormValid && onFormValid(valid);
+  }, [selectedDate, time, name, phone, email, description, onFormValid]);
+
+  useImperativeHandle(ref, () => ({
+    submit: () => {
+      setShowModal(true);
+    }
+  }));
+
+  const handleCloseModal = () => {
+    setShowModal(false);
     resetForm();
   };
 
@@ -23,10 +39,19 @@ const AppointmentForm = () => {
     setDescription('');
   };
 
+  function formatTime(time24) {
+    if (!time24) return '';
+    const [hourStr, minute] = time24.split(':');
+    let hour = parseInt(hourStr, 10);
+    const ampm = hour >= 12 ? 'PM' : 'AM';
+    hour = hour % 12 || 12;
+    return `${hour}:${minute} ${ampm}`;
+  }
+
   return (
     <div className="appointment-form">
-      <h1 className="text-center mb-4">Book an Appointment</h1>
-      <Form onSubmit={handleSubmit}>
+      <h1 className="text-center mb-4">Tell us about yourself</h1>
+      <Form>
         <Form.Group controlId="formTime">
           <Form.Label>What time works for you?</Form.Label>
           <Form.Control
@@ -73,24 +98,31 @@ const AppointmentForm = () => {
             required
           />
         </Form.Group>
-        <Button variant="dark" type="submit" className="mt-3">
-          Book Appointment
-        </Button>
       </Form>
 
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
+      <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
           <Modal.Title>Appointment Booked</Modal.Title>
         </Modal.Header>
-        <Modal.Body>You have successfully booked your appointment.</Modal.Body>
+        <Modal.Body>
+          You have successfully booked your appointment
+          {selectedDate && (
+            <>
+              <br />
+              <strong>Date:</strong> {selectedDate.toLocaleDateString()}
+              <br />
+              <strong>Time:</strong> {formatTime(time)}
+            </>
+          )}
+        </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
+          <button className="btn btn-secondary" onClick={handleCloseModal}>
             Close
-          </Button>
+          </button>
         </Modal.Footer>
       </Modal>
     </div>
   );
-};
+});
 
 export default AppointmentForm;

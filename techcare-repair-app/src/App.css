@@ -118,8 +118,7 @@ body {
         transition: 0.2s;
       }
 
-      .date:hover,
-      .date.active {
+      .date:hover{
         background: #000;
         color: #fff;
       }
@@ -131,3 +130,19 @@ body {
       .date.inactive:hover {
         color: #fff;
       }
+      .date.selected {
+      background: #000 !important;
+      color: #fff !important;
+      border-radius: 50%;
+    }
+
+    .date.active:not(.selected) {
+      background: #222;
+      color: #fff;
+      border-radius: 50%;
+    }
+
+    .fixed-calendar-height {
+    min-height: 380px;
+    position: relative;
+  }
