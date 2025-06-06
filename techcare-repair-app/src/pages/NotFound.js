@@ -10,7 +10,7 @@ const NotFound = () => {
         backgroundColor: "aliceblue",
         paddingTop: "200px",
         paddingBottom: "200px",
-        marginBottom: "100px",
+        marginBottom: "250px",
       }}
       id="theBest"
     >
