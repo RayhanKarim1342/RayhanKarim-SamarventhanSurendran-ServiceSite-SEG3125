@@ -25,6 +25,7 @@ const Book = () => {
           backgroundColor: "azure",
           maxWidth: "1100px",
           minHeight: "80vh",
+          marginBottom: "100px",
         }}
       >
         <h1
